@@ -29,6 +29,7 @@ let fives = `1+${nameThird}`
 let isTrue = true
 let is LifePain = false
 
+
 4) null - специальное обозначение ничего
 let empty=null;
 
