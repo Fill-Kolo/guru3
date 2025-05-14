@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+п»їimport { test, expect } from '@playwright/test';
 import { CheckNoAuthorization } from "../src/pages/check.noauthorization"
 import { TransitionSecondPagination } from "../src/pages/trasition.second.pagination"
 import { TransitionLastPagination } from "../src/pages/transition.last.pagination"
@@ -13,7 +13,7 @@ import { SelectTagCheckStates } from '../src/pages/select.tag.checkStates'
 test('checkNoAuthorization', async ({
 	page,
 }) => {
-	// Происходит проверка, что никто не авторизирован на странице
+	// Proiskhodit proverka, chto nikto ne avtorizirovan na stranice
 	const checkNoAuthorization = new CheckNoAuthorization(page);
 
 	await checkNoAuthorization.open();
@@ -23,7 +23,7 @@ test('checkNoAuthorization', async ({
 test('transitionSecondPagination', async ({
 	page,
 }) => {
-	//Проверяем, что происходит переход пагинации на вторую страницу
+	//Proveryaem, chto proiskhodit perekhod paginacii na vtoruyu stranicu
 	const transitionSecondPagination = new TransitionSecondPagination(page);
 
 	await transitionSecondPagination.open();
@@ -34,7 +34,7 @@ test('transitionSecondPagination', async ({
 test('transitionLastPagination', async ({
 	page,
 }) => {
-	//Проверяем, что происходит переход пагинации на поледнюю страницу
+	//Proveryaem, chto proiskhodit perekhod paginacii na polednyuyu stranicu
 	const transitionLastPagination = new TransitionLastPagination(page);
 
 	await transitionLastPagination.open();
@@ -44,7 +44,7 @@ test('transitionLastPagination', async ({
 test('logOutNewCreatedUser', async ({
 	page,
 }) => {
-	// Готовим странички
+	// Gotovim stranichki
 
 	const mainpage = new MainPage(page);
 	const registerPage = new RegisterPage(page);
@@ -71,10 +71,22 @@ test('logOutNewCreatedUser', async ({
 test('selectTagCheckStates', async ({
 	page,
 }) => {
-	//Проверяем, что статьи с тегом "ver"
+	//Proveryaet, chto nahodyatsya tegi po stat'yam s nadpis'yu "ver"
 	const selectTagCheckStates = new SelectTagCheckStates(page);
 
 	await selectTagCheckStates.open();
 	await selectTagCheckStates.clickTag();
-	await selectTagCheckStates.checkAllStates();
+	
+
+		const articlePreviews = await this.page.locator(this.locators.articlePreview).all();
+		//Proverka, chto esli vyvoditsya chislo 3 v konsole, to znachit vse tri stat'i zagruzilis'
+		let number123 = 0;
+		for (const articlePreview of articlePreviews) {
+
+			await expect(articlePreview.locator(this.locators.tagInState).filter({ hasText: 'ver' })).toHaveText('ver');
+			number123 = number123 + 1;
+			console.log(number123)
+
+		}
+	
 });

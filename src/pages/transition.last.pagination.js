@@ -8,7 +8,7 @@ export class TransitionLastPagination {
 
 	async open() {
 		await this.page.goto('https://realworld.qa.guru/');
-		await this.page.waitForTimeout(1200);
+		await this.page.waitForTimeout(700);
 
 	}
 
@@ -16,7 +16,6 @@ export class TransitionLastPagination {
 		{
 			const allItems = await this.allPaginationButton.all();
 			await allItems[allItems.length - 2].click();
-			await this.page.waitForTimeout(1200);
 		}
 	}
 

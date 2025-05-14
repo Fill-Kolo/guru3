@@ -15,15 +15,3 @@ export class CheckNoAuthorization {
 		await this.loginButton.click()
 	}
 }
-
-/*
-function name(items) {
-	for (const singleItem of items) {
-		const innerContent = singleItem.innerHTML;
-		if (innerContent.lastIndexOf(">") !== -1) { 
-			console.log(innerContent.slice(innerContent.lastIndexOf(">")))
-		}
-	}
-}
-
-*/

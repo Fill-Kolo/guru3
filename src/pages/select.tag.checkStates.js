@@ -1,13 +1,14 @@
-import { expect } from '@playwright/test';
+п»їimport { expect } from '@playwright/test';
 
 export class SelectTagCheckStates {
 
 	locators = {
-		// данный локатор ищёт непосредственно тег с текстом "ver"
+		// dannyj lokator ishchyot neposredstvenno teg s tekstom "ver"
 		tagState: 'button[class="tag-pill tag-default"] >> text="ver"',
 		articlePreview: '.article-preview',
-		tagInState: '.tag-default.tag-pill.tag-outline'
-
+		tagInState: '.tag-default.tag-pill.tag-outline',
+		// dannyj lotakr ishchet element paginacii
+		PaginationButton: '.page-item'
 	}
 
 	constructor(page) {
@@ -16,37 +17,18 @@ export class SelectTagCheckStates {
 	}
 
 	async open() {
-		await this.page.goto('https://vk.com/', {
-		//	waitUntil: 'networkidle' 
+		await this.page.goto('https://realworld.qa.guru/', {
+			waitUntil: 'networkidle'
 		});
 	}
 
+
 	async clickTag() {
 		{
-			
 			await this.page.locator(this.locators.tagState).click();
-			//await this.page.waitForLoadState('domcontentloaded');
-			//await this.page.waitForTimeout(800);
-
+			//Proveryaem zagruzku paginacii, t.e. chtoby uspela otrisovat'sya vsya stranica
+			await this.page.waitForSelector(this.locators.PaginationButton);
 		}
-	}
+	};
 
-	async checkAllStates() {
-		{
-			const allTagLists = await this.page.locator('.tag-default tag-pill tag-outline').all();
-			await Promise.all(
-				allTagLists.map(tagList => tagList.waitFor())
-			);
-			const articlePreviews = await this.page.locator(this.locators.articlePreview).all();
-			//Проверка, что если пишется в консоле число 3, значит все 3 статьи прогрузились
-			let number123 = 0;
-			for (const articlePreview of articlePreviews){
-				
-				await expect(articlePreview.locator(this.locators.tagInState).filter({ hasText: 'ver' })).toHaveText('ver');
-				number123 = number123 + 1;
-				console.log(number123)
-
-			}
-			}
-		}
 }
