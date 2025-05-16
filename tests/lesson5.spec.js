@@ -78,14 +78,11 @@ test('selectTagCheckStates', async ({
 	await selectTagCheckStates.clickTag();
 	
 
-		const articlePreviews = await this.page.locator(this.locators.articlePreview).all();
+	const articlePreviews = await selectTagCheckStates.page.locator(selectTagCheckStates.locators.articlePreview).all();
 		//Proverka, chto esli vyvoditsya chislo 3 v konsole, to znachit vse tri stat'i zagruzilis'
-		let number123 = 0;
 		for (const articlePreview of articlePreviews) {
 
-			await expect(articlePreview.locator(this.locators.tagInState).filter({ hasText: 'ver' })).toHaveText('ver');
-			number123 = number123 + 1;
-			console.log(number123)
+			await expect(articlePreview.locator(selectTagCheckStates.locators.tagInState).filter({ hasText: 'ver' })).toHaveText('ver');
 
 		}
 	
