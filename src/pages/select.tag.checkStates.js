@@ -8,7 +8,9 @@ export class SelectTagCheckStates {
 		articlePreview: '.article-preview',
 		tagInState: '.tag-default.tag-pill.tag-outline',
 		// dannyj lotakr ishchet element paginacii
-		PaginationButton: '.page-item'
+		PaginationButton: '.page-item',
+		paginationAllButton: '.pagination.pagination-sm'
+
 	}
 
 	constructor(page) {
@@ -27,7 +29,7 @@ export class SelectTagCheckStates {
 		{
 			await this.page.locator(this.locators.tagState).click();
 			//Proveryaem zagruzku paginacii, t.e. chtoby uspela otrisovat'sya vsya stranica
-			await this.page.waitForSelector(this.locators.PaginationButton);
+			await this.page.waitForSelector(this.locators.paginationAllButton);
 		}
 	};
 
