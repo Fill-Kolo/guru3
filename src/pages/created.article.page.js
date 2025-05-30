@@ -7,13 +7,16 @@
 		//данный локатор ищет поле с placeholder "Write your article (in markdown)"
 		articleWrite: '[placeholder="Write your article (in markdown)"]',
 		//данный локатор ищет кнопку Publish Article, которая отвечает за публикацию статьи
-		buttonPublishArticle: 'button.btn.btn-lg.pull-xs-right.btn-primary'
+		buttonPublishArticle: 'button >> text="Publish Article"',
+		//данный локатор ищет кнопку Post commen после создания статьи
+		buttonPostComment: 'button >> text="Post Comment"'
 	}
 
 
 	constructor(page) {
 		this.page = page;
 		this.buttonNewArticle = page.getByRole('link', { name: 'New Article' });
+		this.buttonPostComment = page.getByRole('button', { name: 'Post Comment' })
 
 	}
 
@@ -33,6 +36,8 @@
 		await this.page.locator(this.locators.articleWrite).click();
 		await this.page.locator(this.locators.articleWrite).fill(articleWrite);
 		await this.page.locator(this.locators.buttonPublishArticle).click();
+		await this.page.locator(this.locators.buttonPostComment)
+
 	}
 
 }

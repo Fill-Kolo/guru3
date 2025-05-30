@@ -1,9 +1,10 @@
-export class LogOut {
+﻿export class LogOut {
 
 	constructor(page) {
 		this.page = page;
 		this.dropdownLoginUser = page.locator('.nav-link.dropdown-toggle.cursor-pointer');
-		this.buttonDropdownLogout = page.getByRole('link', { name: 'Logout'});
+		this.buttonDropdownLogout = page.getByRole('link', { name: 'Logout' });
+		this.buttonSignUp = page.getByRole('link', { name: 'Sign up' });
 		
 	}
 
