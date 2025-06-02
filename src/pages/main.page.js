@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+﻿import { test } from '@playwright/test';
 
 export class MainPage{
 
@@ -14,7 +14,7 @@ export class MainPage{
 		});
 	}
 
-	async gotoLogin() {
+	async gotoSignUp() {
 			return test.step('ClickButton', async () => {
 				await this.signupButton.click()
 			})

@@ -33,4 +33,8 @@ export class SelectTagCheckStates {
 		}
 	};
 
+	async getAllArticlePreviews() {
+		return this.page.locator(this.locators.articlePreview).all();
+	}
+
 }
