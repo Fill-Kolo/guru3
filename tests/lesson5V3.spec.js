@@ -12,7 +12,7 @@ import { CreatedArticle } from '../src/pages/created.article.page'
 import { RandomTextBuilder } from '../src/helpers/buillders/random.text.builder'
 import { WriteComment } from '../src/pages/write.comment.page'
 import { TextFirstCommentArticlePage } from '../src/pages/text.comment.article.page'
-import { ChangePassword } from '../src/pages/change.password.page'
+import { ChangeProfileUser } from '../src/pages/change.profile.user.page'
 
 
 
@@ -167,7 +167,7 @@ test('Меняем логин пользователю', async ({
 	const mainpage = new MainPage(page);
 	const registerPage = new RegisterPage(page);
 	const yourFeedPage = new YourFeedPage(page);
-	const changePassword = new ChangePassword(page);
+	const changeProfileUser = new ChangeProfileUser(page);
 
 	//Act
 	const randomUser = new UserBuilder()
@@ -188,10 +188,10 @@ test('Меняем логин пользователю', async ({
 
 
 	//Заходим в профиль для смены пароля
-	await changePassword.openProfileUser();
+	await changeProfileUser.openProfileUser();
 
 	//Меняем логин Юзеру 
-	await changePassword.changeUserName(randomTextBuilder);
+	await changeProfileUser.changeUserName(randomTextBuilder);
 	//Проверяем, что подставился новый логин
 	await expect(yourFeedPage.profileNameField).toContainText(randomTextBuilder.articleName);
 
