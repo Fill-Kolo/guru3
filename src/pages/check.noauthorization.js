@@ -1,4 +1,4 @@
-export class CheckNoAuthorization {
+﻿export class CheckNoAuthorization {
 
 	constructor(page) {
 		this.page = page;
@@ -11,7 +11,7 @@ export class CheckNoAuthorization {
 
 	}
 
-	async gotoLogin() {
+	async gotoSignUp() {
 		await this.loginButton.click()
 	}
 }

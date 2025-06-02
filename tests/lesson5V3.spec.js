@@ -12,6 +12,7 @@ import { CreatedArticle } from '../src/pages/created.article.page'
 import { RandomTextBuilder } from '../src/helpers/buillders/random.text.builder'
 import { WriteComment } from '../src/pages/write.comment.page'
 import { TextFirstCommentArticlePage } from '../src/pages/text.comment.article.page'
+import { ChangePassword } from '../src/pages/change.password.page'
 
 
 
@@ -22,7 +23,7 @@ test('checkNoAuthorization', async ({
 	const checkNoAuthorization = new CheckNoAuthorization(page);
 
 	await checkNoAuthorization.open();
-	await checkNoAuthorization.gotoLogin();
+	await checkNoAuthorization.gotoSignUp();
 });
 
 test('transitionSecondPagination', async ({
@@ -64,7 +65,7 @@ test('logOutNewCreatedUser', async ({
 		.generate();
 
 	await mainpage.open();
-	await mainpage.gotoLogin();
+	await mainpage.gotoSignUp();
 	await registerPage.signup(randomUser);
 	await expect(yourFeedPage.profileNameField).toContainText(randomUser.username);
 	
@@ -84,12 +85,10 @@ test('selectTagCheckStates', async ({
 	await selectTagCheckStates.clickTag();
 
 
-	const articlePreviews = await selectTagCheckStates.page.locator(selectTagCheckStates.locators.articlePreview).all();
+	const articlePreviews = await selectTagCheckStates.getAllArticlePreviews();
 	//Proverka, chto esli vyvoditsya chislo 3 v konsole, to znachit vse tri stat'i zagruzilis'
 	for (const articlePreview of articlePreviews) {
-
 		await expect(articlePreview.locator(selectTagCheckStates.locators.tagInState).filter({ hasText: 'ver' })).toHaveText('ver');
-
 	}
 
 });
@@ -117,7 +116,7 @@ test('Создаем новую статью', async ({
 		.generate();
 
 	await mainpage.open();
-	await mainpage.gotoLogin();
+	await mainpage.gotoSignUp();
 	await registerPage.signup(randomUser);
 	await createdArticle.clickNewArticle();
 	await createdArticle.writeArticle(randomTextBuilder);
@@ -150,12 +149,50 @@ test('Оставляем комментарий под первой стаьей
 		.generate();
 
 	await mainpage.open();
-	await mainpage.gotoLogin();
+	await mainpage.gotoSignUp();
 	await registerPage.signup(randomUser);
 	await writeComment.clickGlobalFeed();
 	await writeComment.clickFirstArticle();
 	await writeComment.clickAndWriteCommen(randomTextBuilder);
 
 	await expect(textFirstCommentArticlePage.textLastCommentOnArticle).toContainText(randomTextBuilder.articleWrite);
+
+});
+
+test('Меняем логин пользователю', async ({
+	page,
+}) => {
+	// Gotovim stranichki
+
+	const mainpage = new MainPage(page);
+	const registerPage = new RegisterPage(page);
+	const yourFeedPage = new YourFeedPage(page);
+	const changePassword = new ChangePassword(page);
+
+	//Act
+	const randomUser = new UserBuilder()
+		.addEmail()
+		.addPassword(14)
+		.addUsername()
+		.generate();
+
+	//Генерируем текст нового логина пользователя
+	const randomTextBuilder = new RandomTextBuilder()
+		.addArticleName(1)
+		.generate();
+
+	await mainpage.open();
+	await mainpage.gotoSignUp();
+	await registerPage.signup(randomUser);
+	await expect(yourFeedPage.profileNameField).toContainText(randomUser.username);
+
+
+	//Заходим в профиль для смены пароля
+	await changePassword.openProfileUser();
+
+	//Меняем логин Юзеру 
+	await changePassword.changeUserName(randomTextBuilder);
+	//Проверяем, что подставился новый логин
+	await expect(yourFeedPage.profileNameField).toContainText(randomTextBuilder.articleName);
 
 });
